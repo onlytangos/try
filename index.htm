@@ -255,19 +255,18 @@ html, body {
     flex-direction: column;
   }
 
-  /* display:contents saca los hijos de #controles al flex de #cont1 */
   #controles {
     max-height: none;
     display: contents;
   }
 
-  /* orden: 1-selectores, 2-botones, 3-video */
   #selectores {
     order: 1;
   }
 
   #contenedor-botones {
     order: 2;
+    margin: 4px 0 5px 0 !important;
   }
 
   #cont2 {
@@ -283,12 +282,10 @@ html, body {
     display: block;
   }
 
-  /* búsqueda ancho completo */
   #busqueda-wrap, #busqueda {
     width: 100% !important;
   }
 
-  /* cada fila de selector: label + select en misma línea */
   .selin {
     width: 100% !important;
     display: flex;
@@ -296,26 +293,22 @@ html, body {
     gap: 4px;
   }
 
-  /* labels compactos */
   label:not(.toggle-btn) {
     width: 52px !important;
     flex-shrink: 0;
     font-size: var(--fuenteP);
   }
 
-  /* selects filtro ocupan el resto */
   #S4,#S3,#S2,#S1,#S0 {
     width: auto !important;
     flex: 1;
     font-size: var(--fuenteP);
   }
 
-  /* selector de clips ancho completo */
   #S5 {
     width: 100% !important;
   }
 
-  /* ocultar panel datos, imprimir, pie, leyenda */
   #datosvideo, #imprimir, #salidaimprimir, #pie, #leyenda {
     display: none !important;
   }
