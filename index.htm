@@ -270,41 +270,24 @@ html, body {
     max-height: none;
   }
 
-  /* búsqueda ancho completo */
-  #busqueda-wrap, #busqueda {
+  .selin, #busqueda-wrap, #busqueda {
     width: 100% !important;
   }
 
-  /* cada fila de selector: label + select en misma línea */
-  .selin {
-    width: 100% !important;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  /* labels compactos */
-  label:not(.toggle-btn) {
-    width: 52px !important;
-    flex-shrink: 0;
-    font-size: var(--fuenteP);
-  }
-
-  /* selects ocupan el resto */
   #S4,#S3,#S2,#S1,#S0 {
-    width: auto !important;
-    flex: 1;
-    font-size: var(--fuenteP);
+    width: calc(100% - 70px) !important;
   }
 
-  /* selector de clips ancho completo */
-  #S5 {
-    width: 100% !important;
+  #datosvideo, #salidaimprimir, #imprimir {
+    width: 100%;
   }
 
-  /* ocultar panel datos, imprimir, pie, leyenda */
-  #datosvideo, #imprimir, #salidaimprimir, #pie, #leyenda {
-    display: none !important;
+  #pie {
+    display: none;
+  }
+
+  #leyenda {
+    display: none;
   }
 
 }
@@ -343,7 +326,7 @@ var colPosicion=6;
 var colGrupo=7; 
 var colUrl=8;
 var selVideo=5; // selector que tiene los videos
-var S5size = window.innerWidth <= 600 ? 10 : 14;
+var S5size = window.innerWidth <= 600 ? 8 : 14;
 
 /*
 function ponSelectores(a,b){
