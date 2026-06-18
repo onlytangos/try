@@ -251,13 +251,30 @@ html, body {
 
   #cont1 {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* display:contents saca los hijos de #controles al flex de #cont1 */
+  #controles {
+    max-height: none;
+    display: contents;
+  }
+
+  /* orden: 1-selectores, 2-botones, 3-video */
+  #selectores {
+    order: 1;
+  }
+
+  #contenedor-botones {
+    order: 2;
   }
 
   #cont2 {
+    order: 3;
     width: 100%;
     height: 60vw;
     min-height: 200px;
-    order: 99; /* video al final */
   }
 
   #player2 {
@@ -266,28 +283,41 @@ html, body {
     display: block;
   }
 
-  #controles {
-    max-height: none;
-  }
-
-  .selin, #busqueda-wrap, #busqueda {
+  /* búsqueda ancho completo */
+  #busqueda-wrap, #busqueda {
     width: 100% !important;
   }
 
+  /* cada fila de selector: label + select en misma línea */
+  .selin {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* labels compactos */
+  label:not(.toggle-btn) {
+    width: 52px !important;
+    flex-shrink: 0;
+    font-size: var(--fuenteP);
+  }
+
+  /* selects filtro ocupan el resto */
   #S4,#S3,#S2,#S1,#S0 {
-    width: calc(100% - 70px) !important;
+    width: auto !important;
+    flex: 1;
+    font-size: var(--fuenteP);
   }
 
-  #datosvideo, #salidaimprimir, #imprimir {
-    width: 100%;
+  /* selector de clips ancho completo */
+  #S5 {
+    width: 100% !important;
   }
 
-  #pie {
-    display: none;
-  }
-
-  #leyenda {
-    display: none;
+  /* ocultar panel datos, imprimir, pie, leyenda */
+  #datosvideo, #imprimir, #salidaimprimir, #pie, #leyenda {
+    display: none !important;
   }
 
 }
