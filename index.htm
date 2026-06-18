@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --fuenteG: 16px;   /* fuente var(--fuenteG) */
+  --fuenteP: 12px;   /* fuente var(--fuenteP) */
+  --colorP: #FFDD00; /* color principal var(--colorP) */
+  --bg: #111;        /* bg principal var(--bg) */
+  --bg2: #222;       /* bg second var(--bg2) */
+  --bg3: #333;       /* bg second var(--bg3) */
+}
+
+#busqueda-clear{
+  position: absolute;
+  right: 4px;
+  top: 0;
+  bottom: -8px;
+  display: none;
+  align-items: center;
+  cursor: pointer;
+  color: #888 !important;
+  font-size: 24px !important;
+  line-height: 1;
+  user-select: none;
+}
+
+#contenedor-botones {
+  font-size:var(--fuenteG) !important;
+  display: flex;
+  justify-content: center; /* centra horizontal        */
+  align-items: center;      /* centra vertical            */
+  gap: 10px;                    /* espacio entre botones */
+  margin-bottom: -10px;
+}
+/* ocultar checkbox real */
+input.toggle {
+  display: none !important;
+}
+/* botón moderno */
+input.toggle + label {
+  display: inline-flex !important;       /* fuerza display */
+  justify-content: center;
+  align-items: center;
+  width: 70px !important;
+  height: 24px;
+  border-radius: 4px;
+  background-color: #a9234f !important; /* inicial */
+  color: var(--colorP);
+  cursor: pointer;
+  position: relative;
+  transition: background-color .2s;
+}
+/* hover apagado */
+input.toggle + label:hover {
+  color: white;
+  background-color: #df4b46 !important;
+}
+/* hover activado */
+input.toggle:checked + label:hover {
+   color: white; 
+  background-color: #25a143 !important;
+}
+/* estado ON */
+input.toggle:checked + label {
+  background-color: #385735 !important; /* activado */
+}
+/* textos dentro del botón */
+input.toggle + label span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity .2s;
+}
+input.toggle + label .on {
+  opacity: 0;
+}
+input.toggle:checked + label .on {
+  opacity: 1;
+}
+input.toggle:checked + label .off {
+  opacity: 0;
+}
+
+*{
+   font-family: "Courier New", monospace;
+}
+div {
+  scrollbar-color: var(--bg) var(--bg2);
+}
+div,select,a{
+  box-sizing: border-box;
+  background-color: var(--bg);
+  color:var(--colorP);
+  border-color: var(--bg3);
+}
+select {
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+a {
+  text-decoration: none;
+}
+label{
+  color: white;
+}
+label:not(.toggle-btn) {
+  display: inline-flex;
+  width: 60px;
+  padding-left: 0px;
+}
+select{
+	display:inline-block;
+}
+div{
+  padding: 2px;
+
+}
+.selin{
+	width: 336px;
+}
+html, body {
+  margin: 0;
+}
+#contenedor{
+  display:flex;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;  /* sobreescribe si el navegador lo soporta */
+  overflow: hidden;
+  min-width: 320px;    /* añadir esto */  
+}
+#cont1{
+	width: 350px;
+}
+#cont2{
+	flex: 1; /* ajuste responsive al resto del ancho disponible */
+	position: relative;
+  margin-top: 2px;
+}
+#controles{
+  height: auto;        /* era 580px fijo */
+  max-height: calc(100vh - 120px);
+}
+#selectores{
+}
+#datosvideo{
+  color: white;
+}
+#datosvideo,#salidaimprimir,#imprimir{
+	font-size:var(--fuenteP);
+	margin:auto;
+	border:1px solid var(--bg3);
+	width:332px; 
+}
+#salidaimprimir,#imprimir{
+  overflow: hidden;
+  text-align: center;
+}
+#salidaimprimir{
+	height: 26px;
+}
+#imprimir{
+	margin-top: 4px;
+	cursor:pointer;
+}
+#pie{
+  font-size:var(--fuenteP);
+  width:100%;
+}
+#leyenda{
+	font-size:var(--fuenteP); 
+	width:100%;
+	height:70px;
+	padding: 10px 10px 10px 30px;
+	background-color: var(--bg2);  
+}
+#S4,#S3,#S2,#S1,#S0{
+	width:242px;
+	font-size:var(--fuenteG);
+}
+#busqueda-wrap{
+  position: relative;
+  width: 334px;
+  margin-bottom: 2px;
+}
+#busqueda{
+  width: 334px;
+  font-size: var(--fuenteG);
+  padding: 2px 22px 2px 4px;
+  border: 1px solid var(--bg3);
+  outline: none;
+  color: var(--colorP);
+  background-color: var(--bg3);
+  box-sizing: border-box;
+}
+#busqueda-clear{
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--bg3);
+  font-size: 14px;
+  line-height: 1;
+  display: none;
+  user-select: none;
+}
+#busqueda-clear:hover{
+  color: var(--colorP);
+}
+#busqueda::placeholder{
+  color: var(--bg3);
+}
+#S5,#S5>option{
+  width:100%;
+  font-size:var(--fuenteP);
+  scrollbar-width: thin;
+  overflow-y: none;  
+}
+#S5::-webkit-scrollbar {
+  display: none;
+}
+#L0,#L1,#L2,#L3,#L4{
+	width: 90px;
+}
+#C1,#C2,#C3,#C4,#C5,#C6{
+	width: 52px;
+	padding-left: 12px;
+}
+#player,#player2{
+	width: 100%;
+	height: 100%;
+}
+
+
+</style>
+
+<script src='datos.js'></script>
+
+<script>
+// datos.js nuevo usa listaParejas (objeto) y etiquetas en vez de parejasMapa (Map) y tema
+var parejasMapa = new Map(Object.entries(listaParejas));
+var tema = etiquetas;
+</script>
+
+<script>
+// GLOBALES
+var figuras=[];
+var parejas=[];
+var estados=[];
+var grupos=[];
+var nSel=['couple','subject','group','position','state','clips'];
+var datos=[];
+var section = {start: 0,end:0};
+var local;
+var player,player2; 
+var z;
+var seleActivo; // ultimo id video cargado
+var todos=0;
+var timer0;
+var colId=0; 
+var colt1=1;
+var colt2=2;
+var colAutor=3;
+var colEstado=4;
+var colTema=5;
+var colPosicion=6;
+var colGrupo=7; 
+var colUrl=8;
+var selVideo=5; // selector que tiene los videos
+var S5size=14;
+
+/*
+function ponSelectores(a,b){
+  for (var j=0;j<datos.length;j++){ 
+    var ele=document.getElementById('S'+j);
+    ele.selectedIndex=0;
+  }
+  document.getElementById('S'+a).selectedIndex=parseInt(b)+1;
+  seleActivo=a;
+}
+*/
+
+function getNt(valor,texto,tipo){
+/*
+
+obtener cuanto en videos cumplen en valor del option
+cada selector es diferente
+datos=[0 parejas,1 tema,2 grupos,3 figuras,4 estados,5 videos]; 
+
+var colId=0; 
+var colt1=1;
+var colt2=2;
+var colAutor=3; couple parejas 0..z
+var colEstado=4; state
+var colTema=5; etiquetas subject
+var colPosicion=6; posiciones figuras
+var colGrupo=7; group 
+var colUrl=8;
+
+*/
+
+let tr=[3,5,7,6,4]; // tema=columna en videos
+let cnt=0; // contador
+let w=0; // valor a buscar en videos
+
+if (tipo==0){
+  w=texto.split(' ')[0];
+}else{
+  w=texto;  
+}
+
+for (let j=0;j<videos.length;j++){
+  if (tipo==0){
+    let v=videos[j][tr[tipo]];
+    if (w==v){cnt++}
+  }else{
+    let v=videos[j][tr[tipo]];
+    if (v.includes(w)){cnt++}
+  }
+
+
+} 
+
+return cnt;
+
+}
+
+
+function creaSelector(x){ 
+  if (x=='S'+selVideo){
+   cambio0();
+   return;
+  }
+  // nombres de las opciones
+  var ele=document.getElementById(x);
+  var txt='<option value="0" selected="selected">*todos*</option>';
+  seleActivo=parseInt(ele.id.substr(1));
+  datos[seleActivo].sort();
+  
+  for (let i in datos[seleActivo]){
+      var k=parseInt(i)+1;
+      txt+='<option value="'+k+'">'+datos[seleActivo][i]+' \u25B9'+getNt(k,datos[seleActivo][i],seleActivo)+'</option>';    
+  }
+  ele.innerHTML=txt;
+  // nombre de la etiqueta
+  var ele=document.getElementById('L'+seleActivo);
+  ele.innerHTML=nSel[seleActivo];
+}
+
+/* EVENTOS */
+function stopVideo() {
+  player.stopVideo();
+}
+
+function cambioVoz(){
+  //console.log('voz:',local);
+  if (local!=undefined) {
+    if (document.getElementById('voz').checked) {
+      document.getElementById("player2").muted=false;
+    }else{
+      document.getElementById("player2").muted=true;
+    }
+  }else{
+    if (document.getElementById('voz').checked){
+      player.muteOn();
+    }else{
+      player.muteOff();
+    }
+  }
+}
+
+function cambioPausa(){
+  //console.log('pausa:',local);
+  if (local!=undefined) {
+    if (document.getElementById('pausa').checked) {
+      document.getElementById("player2").pause();
+    }else{
+      document.getElementById("player2").play();
+    }
+  }else{
+    if (document.getElementById('pausa').checked){
+      player.pauseVideo();
+    }else{
+      player.playVideo();
+    }
+  }
+}
+
+function getPat(id){
+// retornar un campo de video dado el id
+  for (j=0;j<videos.length;j++){
+    if (videos[j][0]==id){
+      return videos[j][colUrl];
+    }
+  }
+  return '';
+}
+
+function evtImprimir(){
+  //console.log('nueva');
+  let texto='';
+  let txt=[];
+  let ele=document.getElementById('S'+selVideo);
+  for (i=0;i<ele.options.length;i++){
+    linea=ele.options[i].innerHTML.split(' ');
+    let x=getPat(linea[0]);
+    if (x!=''){
+      //console.log('imprimir:',linea,getPat(linea[0]));
+      txt.push(x);     
+    }
+  }
+  txt.sort();
+  for (i=0;i<txt.length;i++){
+    texto+=txt[i]+'<br/>';
+  }
+  document.getElementById("salidaimprimir").innerHTML='copiado portapapeles '+txt.length+'<br/>';
+  // recorrer el array , si esta en el selector
+  // id + nombre fichero + ini + fin
+  copyClip(txt.join('\n'));
+
+}
+
+function cambioVelo(){
+  //console.log('cambioVelo:',local)
+  if (local!=undefined){
+    //console.log(velo);    
+    // local
+    if (document.getElementById('velo').checked){
+     document.getElementById("player2").playbackRate=0.25;  
+    }else{
+     document.getElementById("player2").playbackRate=1;     
+    }
+  }else{
+    if (document.getElementById('velo').checked){
+      player.setPlaybackRate(0.25);
+    }else{
+       player.setPlaybackRate(1);     
+    }
+  }
+}
+
+function cargaTiemposYT(x,sele,n){
+  section.start=parseInt(datos[sele][n][colt1]);
+  section.end=parseInt(x*datos[sele][n][colt2]);
+}
+
+function cargaTiempos(a,b){
+  section.start=a;
+  section.end=b;
+}
+
+function getByValue(map,searchValue) {
+  for (let [key, value] of map.entries()) {
+    if (value===searchValue)
+      return key;
+  }
+}
+
+function cambio0(){
+  document.getElementById('salidaimprimir').innerHTML='';
+// recargar selector de videos segun opciones
+// leer selectores de opciones
+console.log('XXX:cambio');
+  var sel0=document.getElementById('S0');
+  var sel1=document.getElementById('S1'); 
+  var sel2=document.getElementById('S2');
+  var sel3=document.getElementById('S3');
+  var sel4=document.getElementById('S4');
+  
+  var s0=sel0.options[sel0.selectedIndex].text;
+  var s0v=sel0.value; 
+  var s1=sel1.options[sel1.selectedIndex].text.split(' ')[0];
+  var s1v=sel1.value;  
+  var s2=sel2.options[sel2.selectedIndex].text;
+  var s2v=sel2.value;
+  var s3=sel3.options[sel3.selectedIndex].text.split(' ')[0];;
+  var s3v=sel3.value;  
+  var s4=sel4.options[sel4.selectedIndex].text;
+  var s4v=sel4.value; 
+
+  var txt='';
+  // iniciales de la pareja
+  var delimitador=' '; // en parejas 
+  var pr=s0.split(delimitador)[0];
+  for (j=0;j<videos.length;j++){  
+    let c0=(pr==videos[j][colAutor])||(s0v==0);
+    let c1=(videos[j][colTema].indexOf(s1)!=-1)||(s1v==0);  
+    let c2=(grupos[s2v-1]==videos[j][colGrupo])||(s2v==0);
+    let c3=(videos[j][colPosicion].includes(s3))||(s3v==0);
+    let c4=(estados[s4v-1]==videos[j][colEstado])||(s4v==0);
+// resaltar la posicion seleccionada en el texto del option
+    txt3=s3;
+    if (c3){
+      txt3=videos[j][colPosicion];
+      txt3=txt3.replace(s3,"\u254F"+s3);  //utf8
+      txt3=txt3.replace("-\u254F","\u254F");            
+    }  
+    txt3=txt3.replaceAll('-','\u254E'); 
+// formar selector de videos por el filtro
+console.log('filtro s* : ',s0,s1,s2,s3,s4);
+console.log('filtro s*v : ',s0v,s1v,s2v,s3v,s4v);
+console.log('filtro c* : ',c0,c1,c2,c3,c4);
+	if( c0 && c1 && c2 && c3 && c4 ){
+      txt+='<option value="'+(j+1)+'">'+videos[j][colId]+' '+videos[j][colTema]+' '+txt3+'</option>';     
+    }
+  }
+  let ele=document.getElementById('S'+selVideo); // videos 
+  ele.innerHTML=txt; // actualizar lista de videos del selector
+}
+
+function cambio(){ 
+// cambio de video por selector
+  carga(this.id.substr(1),this.value-1);
+}
+
+function carga(a,b){ 
+// carga un video, llamado desde desde eventos y desde inicio
+  
+  // panel de informacion del video
+let txt='';
+let txt1=videos[b][colUrl].split('/').pop();
+let txt2=parejasMapa.get(videos[b][colAutor]);
+txt+=videos[b][colId]+': '+txt2+'<br/>';   
+txt+='fi: '+txt1+'<br/>'; 
+txt+='su: '+videos[b][colTema]+'<br/>';
+txt+='gr: '+videos[b][colGrupo]+'<br/>';
+txt+='po: '+videos[b][colPosicion]+'<br/>';
+txt+='st: '+videos[b][colEstado]+'<br/>';
+
+  document.getElementById('datosvideo').innerHTML=txt; 
+  seleActivo=parseInt(a);
+  document.getElementById('bucle').checked=true;
+  document.getElementById('pausa').checked=false;
+  document.getElementById('velo').checked=false;
+  document.getElementById('voz').checked=false;
+  local=videos[b][4]; // local o remoto !! true => estado
+  resetVideos();   
+  if (local!=undefined) {
+    var x = document.getElementById("player2"); // abre ventana
+    x.style='display:innerHTML';  
+    cargaTiempos(videos[b][colt1],videos[b][colt2])   
+    cargaVideoLocal(
+      videos[b][colUrl],
+      section.start,section.end)
+  }
+  else {
+  // dejaremos de usar online
+/*
+var x = document.getElementById("player");
+    x.style='display:innerHTML';    
+    cargaTiemposYT(1,seleActivo,b);
+    cargaVideoYT(videos[b][3],section.start,section.end);
+*/
+}
+  if (timer0!=undefined){clearTimeout(timer0);}
+  timer0=setInterval(loopTimer,100);
+}
+
+function loopTimer(){
+// unico timer 
+// analiza si el video llego al final
+// si es asi vuelta al inicio
+  var bucle=document.getElementById('bucle').checked;
+  if (local!=undefined){ // local
+    var x=document.getElementById("player2");
+    if (bucle && x.currentTime>section.end) x.currentTime=section.start;
+  }else{ // YT
+  //console.log("YT",player.getCurrentTime(),section.end);    
+//    if (bucle && player.getCurrentTime()>section.end) player.seekTo(section.start);
+  }
+}
+
+/*
+function cargaVideoYT(vid,a,b){
+  player.loadVideoById(vid,a);  
+}
+
+function loopYT() {
+  player.seekTo(section.start);
+}
+*/
+
+function cargaVideoLocal(vid,a,b){
+  var x = document.getElementById("player2");  
+  x.src=vid;//+'.mp4';
+  x.controls=true;
+  x.currentTime=section.start;
+  x.loop=true; 
+  x.muted=true; 
+  x.playbackRate=1;  
+  x.play();
+}
+
+function loopLocal(){
+  var x = document.getElementById("player2");
+  x.currentTime=section.start;
+}
+
+function resetVideos(){
+  resetVideo();
+  resetVideoLocal();
+}
+
+function resetVideoLocal(){
+  var x = document.getElementById("player2");
+  x.style='display:none';
+  x.src='';
+  x.controls=false;
+}
+
+function resetVideo(){
+  var x = document.getElementById("player");
+  x.style='display:none';
+}
+
+function buscar(){
+  var q = document.getElementById('busqueda').value.trim().toLowerCase();
+  if (q === '') {
+    // sin búsqueda: restaurar todos los selectores al estado normal
+    for (var j = 0; j < 5; j++) {
+      document.getElementById('S'+j).selectedIndex = 0;
+    }
+    cambio0();
+    return;
+  }
+  // buscar en todos los campos usados por los selectores:
+  // colAutor(3), colTema(5), colGrupo(7), colPosicion(6), colEstado(4)
+  var txt = '';
+  for (var j = 0; j < videos.length; j++) {
+    var v = videos[j];
+    // construir texto de búsqueda con los campos de los selectores
+    // pareja: buscar nombre completo via parejasMapa
+    var nombrePareja = (parejasMapa.get(v[colAutor]) || '') + ' ' + (v[colAutor] || '');
+    var camposBusqueda = (
+      nombrePareja + ' ' +
+      (v[colTema]     || '') + ' ' +
+      (v[colGrupo]    || '') + ' ' +
+      (v[colPosicion] || '') + ' ' +
+      (v[colEstado]   || '')
+    ).toLowerCase();
+    var palabras = q.split(/\s+/).filter(function(p){ return p.length > 0; });
+    var coincide = palabras.every(function(p){ return camposBusqueda.indexOf(p) !== -1; });
+    if (coincide) {
+      txt += '<option value="'+(j+1)+'">'+v[colId]+' '+v[colTema]+' '+v[colPosicion]+'</option>';
+    }
+  }
+  var ele = document.getElementById('S'+selVideo);
+  ele.innerHTML = txt;
+  // resetear selectores de filtro para no interferir
+  for (var j = 0; j < 5; j++) {
+    document.getElementById('S'+j).selectedIndex = 0;
+  }
+}
+
+function madeSelectores(){
+  var pel=document.getElementById('selectores');
+  // caja de búsqueda encima del primer selector
+  var elBusq = document.createElement('div');
+  elBusq.id = 'busqueda-wrap';
+  elBusq.className = 'selin';
+  var inp = document.createElement('input');
+  inp.type = 'text';
+  inp.id = 'busqueda';
+  inp.placeholder = 'search...';
+  inp.setAttribute('autocomplete','off');
+  inp.addEventListener('input', function(){
+    document.getElementById('busqueda-clear').style.display = this.value ? 'block' : 'none';
+    buscar();
+  });
+  var clr = document.createElement('span');
+  clr.id = 'busqueda-clear';
+  clr.innerHTML = '✕';
+  clr.addEventListener('click', function(){
+    document.getElementById('busqueda').value = '';
+    this.style.display = 'none';
+    for (var j = 0; j < 5; j++) document.getElementById('S'+j).selectedIndex = 0;
+    cambio0();
+  });
+  elBusq.appendChild(inp);
+  elBusq.appendChild(clr);
+  pel.appendChild(elBusq);
+  for (let j=0;j<nSel.length;j++){
+    let el1=document.createElement('div');
+    el1.className='selin';
+    pel.appendChild(el1);
+    if (j<5){
+      let el2=document.createElement('label');
+      el2.id='L'+j;
+      el2.for='S'+j;
+      el1.appendChild(el2);     
+    }
+    let el3=document.createElement('select');    
+    el3.id='S'+j;
+    el1.appendChild(el3);
+  }
+  document.getElementById('S'+selVideo).size=S5size;
+}
+
+function madeGrupos() {
+	grupos = [...new Set(videos
+		.map(i=>i[colGrupo])
+		.filter(v=>v!=='') )]
+	.sort((a, b) => a - b);
+}
+
+function madeEstados() {
+	estados = [...new Set(videos
+		.map(i=>i[colEstado])
+		.filter(v=>v!=='') )]
+	.sort((a, b) => a - b);
+}
+
+function madeParejas(){
+  parejasMapa.forEach(
+    (v,k)=>parejas.push(''+k+' '+v)
+  );
+  parejas.sort();
+  //console.log('parejas:',parejas);
+}
+
+function madeFiguras(){ // posiciones
+  for (let j=0;j<videos.length;j++){
+    //console.log(videos[j]);
+  	let v=videos[j][colPosicion];
+  	if (v!=''){
+      let cadena=v.trim().split('-');
+      //if (cadena!=''){
+        const resultado = [];
+        cadena.forEach(cadena => {
+            resultado.push(...cadena.split("-"));
+         });  
+        const limpias = [...cadena, ...resultado]
+        .map(x => x.trim())
+        .filter(x => x.length > 0);
+          figuras.push(...limpias);     
+          let a=figuras[figuras.length-1];
+      //}
+  	}
+  }
+  figuras = [...new Set(figuras)];
+  figuras.sort();
+  //console.log('figuras :',figuras);
+}
+
+function copyClip(texto){
+  //console.log('copyClip');
+  navigator.clipboard.writeText(texto);
+  return;
+}
+
+function b(n){
+  return "&nbsp;".repeat(n);
+}
+
+function inicio(){
+// imprime estrella de pasos
+	let cr='<br/>';
+	let txt=b(11)+'1'+b(9)+'2'+cr+b(5)+'open 7'+b(3)+'5o0c6'+b(3)+'8 close'+cr+b(11)+'3'+b(9)+'4'+cr;
+	document.getElementById('leyenda').innerHTML=txt;
+// crear datos  
+//console.log('tema1',tema);
+  madeParejas();
+  madeGrupos();
+  madeFiguras();
+  madeEstados();
+  datos=[parejas,tema,grupos,figuras,estados,videos]; 
+  
+// crear select
+  madeSelectores();
+// eventos
+  document.getElementById('imprimir').addEventListener('click',evtImprimir);
+  document.getElementById('velo').addEventListener('change',cambioVelo); 
+  document.getElementById('pausa').addEventListener('change',cambioPausa);
+  document.getElementById('voz').addEventListener('change',cambioVoz);
+// crear options y eventos del selector
+  for (var j=0;j<datos.length;j++){
+    var n='S'+j;   
+    creaSelector(n); // id
+    if (j<5){ // cambio en el filtro algun selector del filtro
+      document.getElementById(n).addEventListener('change', function(){
+        document.getElementById('busqueda').value = '';
+        cambio0();
+      });
+    }else{ // cambio en el selector de videos
+      document.getElementById(n).addEventListener('change',cambio);      
+    }
+  }
+   carga(0,0); // cargar el primer video de la lista
+}
+
+window.onload=inicio;
+
+</script>
+
+</head>
+<body>
+<div id='contenedor'>
+
+<div id='cont1'>
+<div id='controles'>
+
+    <div id="contenedor-botones">
+        <input type="checkbox" id="velo" class="toggle">
+        <label for="velo" class="toggle-btn">
+          <span class="on">SLOW</span>
+          <span class="off">FAST</span>
+        </label>
+
+        <input type="checkbox" id="pausa" class="toggle">
+        <label for="pausa" class="toggle-btn">
+          <span class="on">STOP</span>
+          <span class="off">GO</span>
+        </label>
+
+        <input type="checkbox" id="bucle" class="toggle">
+        <label for="bucle" class="toggle-btn">
+          <span class="on">LOOP</span>
+          <span class="off">CONT</span>
+        </label>
+
+        <input type="checkbox" id="voz" class="toggle">
+        <label for="voz" class="toggle-btn">
+          <span class="on">SOUND</span>
+          <span class="off">OFF</span>
+        </label>
+    </div>
+
+		<span id='C5' id='info'></span>
+		<div id='selectores'></div>
+		<div id='datosvideo'></div>  
+		<div id='imprimir'>! click to print selection !</div>  
+		<div id='salidaimprimir'></div>  
+</div>
+	
+  	<div id='pie'>
+  	      [<a target='_blank' href='https://tangopasionradio.com/'>tangopasion radio</a>][<a target='_blank' href='https://www.youtube.com/playlist?list=PLWDxvk52aZtNhYVrdlJtuxpYARuJZIKVc'>solos</a>][<a target='_blank' href='https://www.youtube.com/watch?v=w7NI04R4cGU&list=PLWDxvk52aZtPVNj5m38CD1wbCnNbAhpd3'>cantores</a>][<a target='_blank' href='https://www.youtube.com/watch?v=jGM2Ah0tShs&list=PLWDxvk52aZtOqk1MT9Oy62G6o00a6clSG'>tandas</a>][<a target='_blank' href='https://www.youtube.com/watch?v=qdRXB1_5rVE&list=PLWDxvk52aZtPw0BSroC3EC6h5Mle2iCeb'>orquestas</a>][<a href='https://www.youtube.com/@overjazzrecords/playlists' target='_blank'>overjazz</a>]
+  	</div>	
+  	<div id='leyenda'></div> 
+
+</div>
+ 
+   <div id='cont2'>
+     <video id='player2'></video> <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player"></div>
+   </div>
+
+ 
+
+</div>
+</body>
+</html>
