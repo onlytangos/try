@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 :root {
+  --fuenteX: 18px;   /* movil */
   --fuenteG: 16px;   /* fuente var(--fuenteG) */
   --fuenteP: 12px;   /* fuente var(--fuenteP) */
   --colorP: #FFDD00; /* color principal var(--colorP) */
@@ -190,6 +191,10 @@ html, body {
   width: 334px;
   margin-bottom: 2px;
 }
+/* También funciona para textareas */
+textarea::placeholder {
+    color: #999999;
+}
 #busqueda{
   width: 334px;
   font-size: var(--fuenteG);
@@ -220,7 +225,7 @@ html, body {
 }
 #S5,#S5>option{
   width:100%;
-  font-size:var(--fuenteP);
+  font-size:var(--fuenteX);
   scrollbar-width: thin;
   overflow-y: none;  
 }
@@ -294,15 +299,18 @@ html, body {
   }
 
   label:not(.toggle-btn) {
-    width: 52px !important;
+    width: 75px !important;
+    white-space: nowrap;
     flex-shrink: 0;
-    font-size: var(--fuenteP);
+    font-size: var(--colorX);
   }
 
   #S4,#S3,#S2,#S1,#S0 {
+    box-sizing: border-box;
     width: auto !important;
     flex: 1;
-    font-size: var(--fuenteP);
+    min-width: 0;
+    font-size: var(--colorX);
   }
 
   #S5 {
@@ -349,7 +357,6 @@ var colPosicion=6;
 var colGrupo=7; 
 var colUrl=8;
 var selVideo=5; // selector que tiene los videos
-var S5size = window.innerWidth <= 600 ? 8 : 14;
 
 /*
 function ponSelectores(a,b){
@@ -738,6 +745,7 @@ function madeSelectores(){
   var pel=document.getElementById('selectores');
   // caja de búsqueda encima del primer selector
   var elBusq = document.createElement('div');
+  elBusq.placeholder='buscar..';
   elBusq.id = 'busqueda-wrap';
   elBusq.className = 'selin';
   var inp = document.createElement('input');
@@ -775,7 +783,10 @@ function madeSelectores(){
     el3.id='S'+j;
     el1.appendChild(el3);
   }
-  document.getElementById('S'+selVideo).size=S5size;
+  document.getElementById('S'+selVideo).size = (window.innerWidth <= 600 ? 8 : 14);
+  window.addEventListener('resize', function(){
+    document.getElementById('S'+selVideo).size = (window.innerWidth <= 600 ? 8 : 14);
+  });
 }
 
 function madeGrupos() {
