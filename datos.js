@@ -164,9 +164,8 @@ var videos= [
 ["XX500","000","999","XX","","sacada","","","./M/XX500sacada.mp4"],
 ["XX501","000","999","XX","","cruce.cinco","","","./M/XX501cruce.mp4"],
 ["SU044","000","999","SU","","colgada","","","./M/SU044colgada.mp4"],
-["ST010","000","999","ST","","ocho","","","./M/ST010ocho.mp4"],
+["ST010","000","999","ST","","ocho.tecnicaM","","","./M/ST010ocho.mp4"],
 ["XX504","000","999","XX","","pasos","","","./M/XX504pasos.mp4"],
-
 ["AA000","000","999","AA","","clase.escena","","","./M/AA000clase.mp4"],
 ["AA001","000","999","AA","#2-new","escena","","","./M/AA001escena.mp4"],
 ["AA002","000","999","AA","#2-new","escena","","","./M/AA002escena.mp4"],
