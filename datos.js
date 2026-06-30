@@ -184,7 +184,7 @@ var videos= [
 ["AE010","000","999","AE","","sacada","p11+HS-p31+HC","","./M/AE010sacada.mp4"],
 ["AE012","000","999","AE","#0-today","sacada","t22-ao1-*p21-t72+p28","","./M/AE012sacada.mp4"],
 ["AE020","002","060","AE","#2-new","bailan.oDarienzo","","","./M/AE020bailan.mp4"],
-["AE021","005","009","AE","#0-today","milonguero.cierre","","","./M/AE020bailan.mp4"],
+["AE021","005","009","AE","#0-repaso","milonguero.cierre","","","./M/AE020bailan.mp4"],
 ["AE022","024","029","AE","#2-new","cierre","","","./M/AE020bailan.mp4"],
 ["AE023","035","040","AE","#2-new","pasos","","","./M/AE020bailan.mp4"],
 ["AE024","000","999","AE","#0-ready","juntos","","","./M/AE024juntos.mp4"],
