@@ -4,6 +4,9 @@
 # NOTA: el disco es exFAT/NTFS y no soporta symlinks, asi que se copia.
 # datos.js e index.htm SIEMPRE se suben tal cual estan en local,
 # nunca se dejan mezclar (merge) con lo que hubiera en remoto.
+# no se toca los archivos originales ni los videos de la carpeta M
+# CTRL+F5 para forzar la recarga
+
 
 REPO=$(cd "$(dirname "$0")" && pwd)
 BASE=$(dirname "$REPO")
