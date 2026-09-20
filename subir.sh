@@ -19,13 +19,27 @@ cp "$BASE/index.htm" "$REPO/index.htm"
 # rsync: solo copia lo que cambio y --delete borra en publicar/M lo que ya no este en M
 rsync -a --delete "$BASE/M/" "$REPO/M/"
 
-# Subir a GitHub
 cd "$REPO"
 # descomenta si : Borres la carpeta .git accidentalmente, Muevas el proyecto a otra carpeta, Empieces un repo nuevo desde cero
 #git init
 #git remote add origin git@github.com:onlytangos/try.git
+
 git add .
 git commit -m "${1:-actualizacion}"
+
+# Traer primero lo que haya en remoto (ej. README creado desde la web de GitHub)
+git pull origin master --allow-unrelated-histories --no-edit
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "El pull ha tenido conflictos que Git no ha podido resolver solo."
+  echo "Revisa 'git status', resuelve los conflictos, luego:"
+  echo "  git add ."
+  echo "  git commit"
+  echo "  git push -u origin master"
+  exit 1
+fi
+
+# Subir a GitHub
 git push -u origin master
 
 # url: https://onlytangos.github.io/try/
