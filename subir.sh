@@ -28,7 +28,7 @@ git add .
 git commit -m "${1:-actualizacion}"
 
 # Traer primero lo que haya en remoto (ej. README creado desde la web de GitHub)
-git pull origin master --allow-unrelated-histories --no-edit
+git pull origin master --allow-unrelated-histories --no-edit --no-rebase
 if [ $? -ne 0 ]; then
   echo ""
   echo "El pull ha tenido conflictos que Git no ha podido resolver solo."
