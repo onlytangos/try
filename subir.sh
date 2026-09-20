@@ -1,6 +1,7 @@
 #!/bin/bash
 # Este script vive en la carpeta "publicar" (junto con .git y check.sh)
 # La carpeta superior (BASE) contiene datos.js, index.htm y M/
+# NOTA: el disco es exFAT/NTFS y no soporta symlinks, asi que se copia.
 
 REPO=$(cd "$(dirname "$0")" && pwd)
 BASE=$(dirname "$REPO")
@@ -12,10 +13,11 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Asegurar que los enlaces simbolicos existen (sin copiar nada)
-[ -L "$REPO/datos.js" ]  || ln -sf "$BASE/datos.js"  "$REPO/datos.js"
-[ -L "$REPO/index.htm" ] || ln -sf "$BASE/index.htm" "$REPO/index.htm"
-[ -L "$REPO/M" ]         || ln -sf "$BASE/M"          "$REPO/M"
+# Copiar los ficheros a publicar (el filesystem no soporta symlinks)
+cp "$BASE/datos.js"  "$REPO/datos.js"
+cp "$BASE/index.htm" "$REPO/index.htm"
+# rsync: solo copia lo que cambio y --delete borra en publicar/M lo que ya no este en M
+rsync -a --delete "$BASE/M/" "$REPO/M/"
 
 # Subir a GitHub
 cd "$REPO"
