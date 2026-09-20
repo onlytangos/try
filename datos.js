@@ -91,8 +91,6 @@ var listaParejas= {
 "ZM": "ezequiel maria-antonieta",
 }
 
-/*prueba edit nobile */
-
 /* subject figuras en general */
 var etiquetas= [
 "1x2", // un paso leader dos del followe
