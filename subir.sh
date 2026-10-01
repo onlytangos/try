@@ -1,5 +1,5 @@
 #!/bin/bash
-# Este script vive en la carpeta "publicar" (junto con .git y check.sh)
+# Este script vive en la carpeta "publicar" (junto con .git)
 # La carpeta superior (BASE) contiene datos.js, index.htm y M/
 # NOTA: el disco es exFAT/NTFS y no soporta symlinks, asi que se copia.
 # datos.js e index.htm SIEMPRE se suben tal cual estan en local,
@@ -32,11 +32,7 @@ no_listo() {
 }
 
 # verificar dependencias
-bash "$REPO/check.sh"
-if [ $? -ne 0 ]; then
-  echo "Abortando push hasta resolver los problemas anteriores."
-  exit 1
-fi
+command -v git >/dev/null    || no_listo "git no está instalado"
 command -v ssh >/dev/null    || no_listo "ssh no está instalado"
 [ -f "$BASE/.deploy_key" ]   || no_listo "falta la clave $BASE/.deploy_key"
 
